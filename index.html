@@ -360,8 +360,8 @@
         const landingPage = document.getElementById('landingPage');
         const mainCard = document.getElementById('mainCard');
 
-        // Memuat tautan file m4a audio baru versi 08_30 dari repositori GitHub
-        const newCelebrateAudio = new Audio('https://raw.githubusercontent.com/Dvnnjad4m/random/90bf239b370d21adefb415fccfc3eceaffb4247c/Devin%20Arvinata%20Adam%20-%20confetti%20sfx%202026-06-06%2008_30.m4a');
+        // MEMANGGIL FILE BARU: Diarahkan langsung ke nama file lokal mp4 barumu
+        const newCelebrateAudio = new Audio('sfxconfetti.mp4');
         newCelebrateAudio.volume = 0.65; // Kenyaringan suara optimal
 
         openBtn.addEventListener('click', () => {
@@ -369,7 +369,7 @@
             landingPage.style.visibility = 'hidden';
             mainCard.classList.add('show');
             
-            // Mempersiapkan audio baru agar siap langsung diputar saat tombol aksi ditekan
+            // Mempersiapkan audio agar siap langsung diputar saat tombol aksi ditekan
             newCelebrateAudio.load();
         });
 
@@ -379,7 +379,7 @@
         const colors = ['#819f7f', '#c084fc', '#fde047', '#67e8f9', '#f472b6'];
 
         button.addEventListener('click', () => {
-            // Memainkan audio m4a baru pilihanmu dari detik awal
+            // Memainkan suara dari berkas mp4 secara instan
             newCelebrateAudio.currentTime = 0;
             newCelebrateAudio.play().catch(err => console.log("Audio play terhambat aturan browser:", err));
             
