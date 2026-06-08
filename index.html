@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Helloouu fellas</title>
+    <title>Helloouu Fellas</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@400;500;700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
@@ -139,10 +139,18 @@
             border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.2s;
+            margin-bottom: 20px; /* Jarak tambahan ke teks kredit */
         }
 
         .btn-open:hover {
             background-color: #728f70;
+        }
+
+        .credit-text {
+            font-family: 'Courier Prime', monospace;
+            font-size: 13px;
+            color: #64748b;
+            display: block;
         }
 
         /* --- KARTU UTAMA --- */
@@ -328,6 +336,7 @@
             <img src="https://emojigraph.org/media/apple/envelope_2709-fe0f.png" alt="Envelope Logo" class="envelope-logo">
             <h2>You received a message</h2>
             <button class="btn-open" id="openBtn">Open Message</button>
+            <span class="credit-text">Created by: Devin</span>
         </div>
     </div>
 
@@ -337,22 +346,22 @@
         <div class="accent-line"></div>
         
         <h1>
-            <span class="animated-item word-1">Hold</span>&nbsp;
-            <span class="animated-item word-2">on!</span>
+            <span class="animated-item word-1">Helloouu</span>&nbsp;
+            <span class="animated-item word-2">Fellas!</span>
             <img src="https://em-content.zobj.net/source/apple/96/waving-hand-sign_1f44b.png" alt="Waving Hand" class="hand-icon animated-item">
         </h1>
         
         <div class="author animated-item">From Devin - Alumni 25</div>
         
         <div class="message animated-item">
-            Wait here until 10th of June! The main quest is almost over, but the big celebration hasn't started yet. Keep your spirits up and get ready for the big day!
+            1st, congrats for finishing the jhs main quest! so here, Devin as ur alumni akt 25 & mewakili segenap rekan-rekan lainnya mengucapkan happy graduation! be happy wherever it is yP, we hope it's the right path for u to keep developing!
         </div>
         
         <div class="quote-container animated-item">
-            <div class="quote-text">"Good things take time"</div>
+            <div class="quote-text">"The best is yet to come"</div>
         </div>
         
-        <button class="btn-action animated-item" id="makeItRainBtn">See You Soon!</button>
+        <button class="btn-action animated-item" id="makeItRainBtn">Celebrate!</button>
     </div>
 
     <script>
@@ -360,17 +369,54 @@
         const landingPage = document.getElementById('landingPage');
         const mainCard = document.getElementById('mainCard');
 
-        // MEMANGGIL FILE BARU: Diarahkan langsung ke nama file lokal mp4 barumu
-        const newCelebrateAudio = new Audio('sfxconfetti.mp4');
+        // Menggunakan tautan raw GitHub agar SFX Konfeti bisa dimuat secara instan langsung oleh browser
+        const newCelebrateAudio = new Audio('https://raw.githubusercontent.com/Dvnnjad4m/gradscard/9eabd44550befd680e1f913a208b676cbf4940b4/sfxconfetti.mp4');
         newCelebrateAudio.volume = 0.65; // Kenyaringan suara optimal
+
+        // --- INTEGRASI MUSIK LATAR (BACKGROUND MUSIC) ---
+        const bgMusic = new Audio('https://raw.githubusercontent.com/Dvnnjad4m/gradscard/9eabd44550befd680e1f913a208b676cbf4940b4/Devin%20Arvinata%20Adam%20-%20bss%202026-06-08%2016_24.m4a');
+        bgMusic.loop = true;
+        bgMusic.volume = 0; // Mulai dari nol untuk memberikan efek fade in halus
+
+        // Fungsi Transisi Fade In Suara
+        function fadeInBackgroundMusic(audio, duration = 3000) {
+            audio.play().catch(err => console.log("Musik terhambat kebijakan browser:", err));
+            const targetVolume = 0.45; // Batas volume maksimal musik latar
+            const step = targetVolume / (duration / 50);
+            
+            let fadeInterval = setInterval(() => {
+                if (audio.volume < targetVolume) {
+                    audio.volume = Math.min(targetVolume, audio.volume + step);
+                } else {
+                    clearInterval(fadeInterval);
+                }
+            }, 50);
+        }
+
+        // Fungsi Transisi Fade Out Suara
+        function fadeOutBackgroundMusic(audio, duration = 2000) {
+            const step = audio.volume / (duration / 50);
+            let fadeInterval = setInterval(() => {
+                if (audio.volume > 0) {
+                    audio.volume = Math.max(0, audio.volume - step);
+                } else {
+                    audio.pause();
+                    clearInterval(fadeInterval);
+                }
+            }, 50);
+        }
 
         openBtn.addEventListener('click', () => {
             landingPage.style.opacity = '0';
             landingPage.style.visibility = 'hidden';
             mainCard.classList.add('show');
             
-            // Mempersiapkan audio agar siap langsung diputar saat tombol aksi ditekan
+            // Mempersiapkan berkas audio/video lokal agar langsung termuat dengan matang
             newCelebrateAudio.load();
+
+            // Memulai pemutaran musik latar menggunakan fungsi fade-in
+            bgMusic.load();
+            fadeInBackgroundMusic(bgMusic, 3000); 
         });
 
         // --- EFEK KONFETI TOMBOL ---
@@ -379,7 +425,7 @@
         const colors = ['#819f7f', '#c084fc', '#fde047', '#67e8f9', '#f472b6'];
 
         button.addEventListener('click', () => {
-            // Memainkan suara dari berkas mp4 secara instan
+            // Memainkan suara dari berkas mp4 secara instan semenjak detik pertama
             newCelebrateAudio.currentTime = 0;
             newCelebrateAudio.play().catch(err => console.log("Audio play terhambat aturan browser:", err));
             
